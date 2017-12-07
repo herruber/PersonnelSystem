@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.IO;
-using System.Web.Mvc;
 
 namespace ProjectPersonelSystem.Repositories
 {
@@ -11,32 +10,19 @@ namespace ProjectPersonelSystem.Repositories
     {
 
 
-        public string GetPath(string company, string department, string fileName, HttpServerUtilityBase Server)
+        public string GetPath(string department, string company, string fileName)
         {
             string path ="~/Files/" +company +"/" +department + "/";
 
-            Directory.CreateDirectory(Server.MapPath(path));
+            Directory.CreateDirectory(path);
 
-            return Server.MapPath(path + fileName);
+            return path + fileName;
         }
 
-        public List<string> GetAllFiles(string company, string department, HttpServerUtilityBase Server)
+        public List<string> GetAllFiles(string department, string company)
         {
             string path = "~/Files/" + company + "/" + department + "/";
-            //DirectoryInfo dir = new DirectoryInfo();
-            List<string> files = Directory.GetFiles(Server.MapPath(path)).ToList();
-            return files;
-        }
-
-        public FileStreamResult ViewFile(string filename)
-        {
-            var fileStream = new FileStream(filename,
-                                     FileMode.Open,
-                                     FileAccess.Read
-                                   );
-
-            var fsResult = new FileStreamResult(fileStream, "application/img");
-            return fsResult;
+            return Directory.GetFiles(path).ToList();
         }
     }
 }
