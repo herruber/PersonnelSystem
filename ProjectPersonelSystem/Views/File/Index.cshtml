@@ -1,0 +1,23 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<div ng-app="App" ng-controller="FileController">
+
+    @using (Html.BeginForm("Upload", "File", FormMethod.Post, new { enctype = "multipart/form-data" }))
+    {
+        <input type="file" name="file" multiple />
+        <input type="submit" name="Submit" id="Submit" value="Upload" />
+    }
+
+    <div>
+
+
+
+    </div>
+
+</div>
+
