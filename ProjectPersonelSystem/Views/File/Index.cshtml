@@ -5,7 +5,7 @@
 
 <h2>Index</h2>
 
-<div ng-app="App" ng-controller="FileController">
+<div ng-app="App" ng-controller="FileController" ng-init="getFiles('TestCompany1', 'TestDepartment1')">
 
     @using (Html.BeginForm("Upload", "File", FormMethod.Post, new { enctype = "multipart/form-data" }))
     {
@@ -13,11 +13,8 @@
         <input type="submit" name="Submit" id="Submit" value="Upload" />
     }
 
-    <div>
+    <button ng-click="getFiles('TestCompany1','TestDepartment1')">Test</button>
 
-
-
-    </div>
-
+    <div ng-repeat="item in allFiles track by $index"><button ng-click="ViewFile(item)">{{getFileName(item)}}</button></div>
 </div>
 

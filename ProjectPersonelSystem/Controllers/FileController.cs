@@ -11,11 +11,28 @@ namespace ProjectPersonelSystem.Controllers
     public class FileController : Controller
     {
 
+        Repositories.FileHandler fhandler = new Repositories.FileHandler();
 
         // GET: File
         public ActionResult Index()
         {
             return View();
+        }
+
+        
+        [HttpGet]
+        public JsonResult GetFiles(string company, string department)
+        {
+            var bajs = fhandler.GetAllFiles(company, department, Server);
+
+            return Json(bajs, JsonRequestBehavior.AllowGet);
+        }
+
+        public ActionResult ViewFile(string filename)
+        {
+            var fileName = Path.GetFileName(filename);
+            Response.AppendHeader("content-disposition", "inline; filename=" + fileName);
+            return fhandler.ViewFile(filename);
         }
 
         [HttpPost]
