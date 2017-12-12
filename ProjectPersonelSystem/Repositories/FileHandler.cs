@@ -19,10 +19,27 @@ namespace ProjectPersonelSystem.Repositories
             return path + fileName;
         }
 
-        public List<string> GetAllFiles(string department, string company)
+        public List<string> GetAllFiles(string company, string department, HttpServerUtilityBase server)
         {
-            string path = "~/Files/" + company + "/" + department + "/";
-            return Directory.GetFiles(path).ToList();
+            string path = server.MapPath("~/Files/" + company + "/" + department + "/");
+            return Directory.GetFiles(path).Select(e => Path.GetFileName(e)).ToList();
+        }
+
+        public void DeleteFile(string company, string department, string file, HttpServerUtilityBase server)
+        {
+            string path = server.MapPath("~/Files/" + company + "/" + department + "/");
+            var files = Directory.GetFiles(path);
+            File.Delete(files.FirstOrDefault(e => Path.GetFileName(e) == file));
+
+        }
+
+        public byte[] GetFileBytes(string company, string department, string file, HttpServerUtilityBase server)
+        {
+            string path = server.MapPath("~/Files/" + company + "/" + department + "/");
+            byte[] filebytes = File.ReadAllBytes(server.MapPath("~/Files/" + company + "/" + department + "/" +file));
+            return filebytes;
+
+            //return new FileStream(Directory.GetFiles(path).FirstOrDefault(e => Path.GetFileName(e) == file), FileMode.Open);
         }
     }
 }

@@ -1,23 +1,36 @@
-﻿
+﻿@model List<string>
+
 @{
     ViewBag.Title = "Index";
 }
 
 <h2>Index</h2>
 
-<div ng-app="App" ng-controller="FileController">
+<div ng-app="App">
+    <div ng-controller="FileController">
 
-    @using (Html.BeginForm("Upload", "File", FormMethod.Post, new { enctype = "multipart/form-data" }))
-    {
-        <input type="file" name="file" multiple />
-        <input type="submit" name="Submit" id="Submit" value="Upload" />
-    }
+        <div ng-init="getFiles()">
 
-    <div>
+            @using (Html.BeginForm("Upload", "File", FormMethod.Post, new { enctype = "multipart/form-data" }))
+            {
+                <input type="file" name="file" multiple />
+                <input type="submit" name="Submit" id="Submit" value="Upload" />
+            }
+        </div>
+        
 
+            @foreach (var item in Model)
+            {
 
+                <div>
+                    <a ng-href="@Url.Action("ViewFile", "File", new { company = "TestCompany1", department = "TestDepartment1", file = item })">@item</a>
+
+                    <button onclick="location.href='@Url.Action("Delete", "File", new { company = "TestCompany1", department = "TestDepartment1", file = item })'">Delete</button>
+                    
+               </div>
+
+            }
 
     </div>
-
 </div>
 
